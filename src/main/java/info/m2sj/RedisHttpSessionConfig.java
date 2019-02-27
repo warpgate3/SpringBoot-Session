@@ -19,8 +19,8 @@ public class RedisHttpSessionConfig {
         return new JedisConnectionFactory();
     }
 
-    @Bean
+    /*@Bean
     public HttpSessionIdResolver httpSessionStrategy() {
-        return HeaderHttpSessionIdResolver.xAuthToken();
-    }
+        return HeaderHttpSessionIdResolver.authenticationInfo();
+    }*/
 }

@@ -3,6 +3,7 @@ package info.m2sj;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -15,32 +16,21 @@ public class SessionclusteringApplication {
 	}
 
 	@RestController
+	@RequestMapping("/")
 	public class TestController {
 
-		@GetMapping("/test")
-		public String getTest(HttpSession session) {
-			if (session.getAttribute("name") == null) {
-				session.setAttribute("name", "warpgate");
-			}
+		@GetMapping("/set-session")
+		public String setSession(HttpSession session) {
+			System.out.println(session.getId());
+			session.setAttribute("name", "warpgate");
 			System.out.println(session.getAttribute("name"));
-			return "hello spring boot2.0";
+			return "set session";
+		}
+
+		@GetMapping("/get-name")
+		public String getSessionName(HttpSession session) {
+			System.out.println(session.getId());
+			return String.valueOf(session.getAttribute("name"));
 		}
 	}
-	/*@Component
-	static class BaseHandler {
-		public Mono<ServerResponse> hello(ServerRequest request) {
-			return ServerResponse.ok()
-					.contentType(MediaType.TEXT_HTML)
-					.body(BodyInserters.fromObject("Hello Spring"));
-		}
-	}
-
-	@Configuration
-	static class Router {
-		@Bean
-		public RouterFunction<ServerResponse> route(BaseHandler baseHandler) {
-			return RouterFunctions.route(RequestPredicates.GET("/mytest").and(RequestPredicates.accept(MediaType.TEXT_HTML)), baseHandler::hello);
-		}
-	}*/
-
 }
